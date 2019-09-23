@@ -15,21 +15,23 @@ export default class Main extends Component {
   };
 
   state = {
+    productInfo: {},
     docs: [],
+    page: 1,
   };
 
   componentDidMount() {
     this.loadProducts();
   }
 
-  loadProducts = async () => {
-    const response = await api.get('/products');
+  loadProducts = async (page = 1) => {
+    const response = await api.get(`/products?page=${page}`);
 
-    const {docs} = response.data;
+    const {docs, ...productInfo} = response.data;
 
     console.log(docs);
 
-    this.setState({docs});
+    this.setState({docs: [...this.state.docs, ...docs], productInfo, page});
   };
 
   renderItem = ({item}) => (
@@ -45,19 +47,25 @@ export default class Main extends Component {
     </View>
   );
 
+  loadMore = () => {
+    const {page, productInfo} = this.state;
+
+    if (page === productInfo.page) return;
+
+    const pageNumber = page + 1;
+    this.loadProducts(pageNumber);
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.textGreen}>burca passou por aqui muahaha</Text>
-        <Text style={styles.textBlue}>burca passou por aqui muahaha</Text>
-        <Text style={styles.textRed}>burca passou por aqui muahaha</Text>
-        <View style={styles.box} />
-
         <FlatList
           contentContainerStyle={styles.list}
           data={this.state.docs}
           keyExtractor={item => item._id}
           renderItem={this.renderItem}
+          onEndReached={this.loadMore}
+          onEndReachedThreshold={0.3}
         />
       </View>
     );
@@ -69,24 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#FAFAFA',
-  },
-
-  textGreen: {
-    color: '#0F0',
-  },
-
-  textBlue: {
-    color: '#00F',
-  },
-
-  textRed: {
-    color: '#F00',
-  },
-
-  box: {
-    width: 60,
-    height: 60,
-    backgroundColor: '#F00',
   },
 
   list: {
