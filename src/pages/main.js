@@ -7,6 +7,10 @@ export default class Main extends Component {
     title: 'Le App',
   };
 
+  state = {
+    counter: 0,
+  };
+
   componentDidMount() {
     this.loadProducts();
   }
@@ -17,6 +21,8 @@ export default class Main extends Component {
     const {docs} = response.data;
 
     console.log(docs);
+
+    this.setState({counter: docs.length});
   };
 
   render() {
@@ -26,6 +32,7 @@ export default class Main extends Component {
         <Text style={styles.textBlue}>burca passou por aqui muahaha</Text>
         <Text style={styles.textRed}>burca passou por aqui muahaha</Text>
         <View style={styles.box} />
+        <Text>{this.state.counter}</Text>
       </View>
     );
   }
