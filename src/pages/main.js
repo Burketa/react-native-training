@@ -8,7 +8,7 @@ export default class Main extends Component {
   };
 
   state = {
-    counter: 0,
+    docs: [],
   };
 
   componentDidMount() {
@@ -22,7 +22,7 @@ export default class Main extends Component {
 
     console.log(docs);
 
-    this.setState({counter: docs.length});
+    this.setState({docs});
   };
 
   render() {
@@ -32,7 +32,9 @@ export default class Main extends Component {
         <Text style={styles.textBlue}>burca passou por aqui muahaha</Text>
         <Text style={styles.textRed}>burca passou por aqui muahaha</Text>
         <View style={styles.box} />
-        <Text>{this.state.counter}</Text>
+        {this.state.docs.map(product => (
+          <Text>{product.title}</Text>
+        ))}
       </View>
     );
   }
