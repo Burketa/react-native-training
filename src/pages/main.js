@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 import api from '../services/api';
 
 export default class Main extends Component {
@@ -25,6 +32,19 @@ export default class Main extends Component {
     this.setState({docs});
   };
 
+  renderItem = ({item}) => (
+    <View>
+      <Text>{item.title}</Text>
+      <Text>{item.description}</Text>
+      <TouchableOpacity onPress={() => {}}>
+        <Text>Acessar</Text>
+      </TouchableOpacity>
+      <Button title="botao" onPress={() => {}}>
+        <Text>Acessar</Text>
+      </Button>
+    </View>
+  );
+
   render() {
     return (
       <View style={styles.container}>
@@ -32,9 +52,12 @@ export default class Main extends Component {
         <Text style={styles.textBlue}>burca passou por aqui muahaha</Text>
         <Text style={styles.textRed}>burca passou por aqui muahaha</Text>
         <View style={styles.box} />
-        {this.state.docs.map(product => (
-          <Text>{product.title}</Text>
-        ))}
+
+        <FlatList
+          data={this.state.docs}
+          keyExtractor={item => item._id}
+          renderItem={this.renderItem}
+        />
       </View>
     );
   }
