@@ -41,7 +41,7 @@ export default class Main extends Component {
       <TouchableOpacity
         style={styles.productButton}
         onPress={() => {
-          this.props.navigation.navigate('Product');
+          this.props.navigation.navigate('Product', {product: item});
         }}>
         <Text style={styles.productButtonText}>Acessar</Text>
       </TouchableOpacity>
