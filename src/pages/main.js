@@ -1,12 +1,5 @@
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Button,
-} from 'react-native';
+import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import api from '../services/api';
 
 export default class Main extends Component {
@@ -15,46 +8,48 @@ export default class Main extends Component {
   };
 
   state = {
-    productInfo: {},
+    appointmentInfo: {},
     docs: [],
     page: 1,
   };
 
   componentDidMount() {
-    this.loadProducts();
+    this.loadAppointments();
   }
 
-  loadProducts = async (page = 1) => {
-    const response = await api.get(`/products?page=${page}`);
+  loadAppointments = async (page = 1) => {
+    const response = await api.get(`/appointments?page=${page}`);
 
-    const {docs, ...productInfo} = response.data;
+    const {docs, ...appointmentInfo} = response.data;
 
     console.log(docs);
 
-    this.setState({docs: [...this.state.docs, ...docs], productInfo, page});
+    this.setState({docs: [...this.state.docs, ...docs], appointmentInfo, page});
   };
 
   renderItem = ({item}) => (
-    <View style={styles.productContainer}>
-      <Text style={styles.productTitle}>{item.title}</Text>
-      <Text style={styles.productDescription}>{item.description}</Text>
+    <View style={styles.appointmentContainer}>
+      <Text style={styles.appointmentTitle}>{item.clientName}</Text>
+      <Text style={styles.appointmentDescription}>{item.appointmentDate}</Text>
       <TouchableOpacity
-        style={styles.productButton}
+        style={styles.appointmentButton}
         onPress={() => {
-          this.props.navigation.navigate('Product', {product: item});
+          this.props.navigation.navigate('Appointment', {product: item});
         }}>
-        <Text style={styles.productButtonText}>Acessar</Text>
+        <Text style={styles.appointmentButtonText}>Acessar</Text>
       </TouchableOpacity>
     </View>
   );
 
   loadMore = () => {
-    const {page, productInfo} = this.state;
+    const {page, appointmentInfo} = this.state;
 
-    if (page === productInfo.page) return;
+    if (page === appointmentInfo.page) {
+      return;
+    }
 
     const pageNumber = page + 1;
-    this.loadProducts(pageNumber);
+    this.loadAppointments(pageNumber);
   };
 
   render() {
@@ -84,7 +79,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  productContainer: {
+  appointmentContainer: {
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderColor: '#DDD',
@@ -93,20 +88,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  productTitle: {
+  appointmentTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
   },
 
-  productDescription: {
+  appointmentDescription: {
     fontSize: 16,
     color: '#999',
     marginTop: 5,
     lineHeight: 24,
   },
 
-  productButton: {
+  appointmentButton: {
     height: 42,
     borderRadius: 5,
     borderWidth: 2,
@@ -117,7 +112,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  productButtonText: {
+  appointmentButtonText: {
     fontSize: 16,
     color: '#DA552F',
     fontWeight: 'bold',

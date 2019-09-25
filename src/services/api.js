@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://rocketseat-node.herokuapp.com/api',
+  baseURL: 'https://heroku-node-api-tests.herokuapp.com/api',
 });
 
 export default api;

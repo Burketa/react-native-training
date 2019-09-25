@@ -1,12 +1,12 @@
 import {createStackNavigator} from 'react-navigation';
 
 import Main from './pages/main';
-import Product from './pages/product';
+import Appointment from './pages/appointment';
 
 export default createStackNavigator(
   {
     Main,
-    Product,
+    Appointment,
   },
   {
     navigationOptions: {
