@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+
+import React from 'react';
+import {Component} from 'react';
 import {StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 import api from '../services/api';
 
